@@ -83,6 +83,21 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         return _baseTokenURI;
     }
 
+    // withdraw eth from contract
+    function withdraw() public onlyOwner {
+        
+        // returns owner of smart contract(whoever deploys the smart contract)
+        address _owner = owner();
+        
+        // stores eth balance of smart contract 
+        uint256 amount = address(this).balance;
+        
+        // transfer the eth to owner's address, sent checks if sent or not
+        (bool sent, ) = _owner.call{ value: amount }("");
+        
+        require(sent, "Failed to send ether");
+    }
+
     // functions to recieve ether
     receive() external payable {}
 
