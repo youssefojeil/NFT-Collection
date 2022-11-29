@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.4;
 
-import "openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IWhitelist.sol";
 
 // Ownable allows us to call onlyOwner modifier
@@ -34,12 +34,13 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     modifier onlyWhenNotPaused {
         require(!_paused, "Contract is currently paused!");
+        _;
     }
 
     
     // NFT metadata, & whitelist contract as well as name and symbol for NFT collection
-    constructor(string memory _baseURI, address whitelistContract) ERC721("Crypto Devs", "CD") {
-        _baseTokenURI = _baseURI;
+    constructor(string memory baseURI, address whitelistContract) ERC721("Crypto Devs", "CD") {
+        _baseTokenURI = baseURI;
         whitelist = IWhitelist(whitelistContract);
     }
 
