@@ -66,7 +66,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     function mint() public payable {
         // check if presale ended
         require(presaleStarted && block.timestamp >= presaleEnded, "Presale has not ended yet");
-                // Check How many tokens have been minted, cant exceed max supply
+        // Check How many tokens have been minted, cant exceed max supply
         require(tokenIds <= maxTokenIds, "Exceeded the limit");
         // require price
         require(msg.value >= _price, "Not enough funds to mint");
@@ -76,6 +76,18 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         _safeMint(msg.sender, tokenIds);
 
     }
+
+    // overriding baseURI function because it returns an empty string
+    // We want it to return the base URI 
+    function _baseURI() internal view override returns (string memory) {
+        return _baseTokenURI;
+    }
+
+    // functions to recieve ether
+    receive() external payable {}
+
+    // fallback used if data is also being sent, not just ether
+    fallback() external payable {}
 
 
 }
