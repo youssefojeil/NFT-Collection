@@ -27,6 +27,8 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     uint256 public _price = 0.01 ether;
 
+    uint256 public _presalePrice = 0.005 ether;
+
     // NFT metadata, & whitelist contract as well as name and symbol for NFT collection
     constructor(string memory _baseURI, address whitelistContract) ERC721("Crypto Devs", "CD") {
         _baseTokenURI = _baseURI;
@@ -49,7 +51,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         // Check How many tokens have been minted, cant exceed max supply
         require(tokenIds <= maxTokenIds, "Exceeded the limit");
         // require price
-        require(msg.value >= _price, "Not enough funds to mint");
+        require(msg.value >= _presalePrice, "Not enough funds to mint");
 
         // increase number of tokens minted after each mint
         tokenIds += 1;
