@@ -29,6 +29,14 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     uint256 public _presalePrice = 0.005 ether;
 
+    bool public _paused;
+
+
+    modifier onlyWhenNotPaused {
+        require(!_paused, "Contract is currently paused!");
+    }
+
+    
     // NFT metadata, & whitelist contract as well as name and symbol for NFT collection
     constructor(string memory _baseURI, address whitelistContract) ERC721("Crypto Devs", "CD") {
         _baseTokenURI = _baseURI;
@@ -42,7 +50,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
         presaleEnded = block.timestamp + 5 minutes;
     }
 
-    function presaleMint() public payable {
+    function presaleMint() public payable onlyWhenNotPaused {
 
         // Check if presale started and hasnt ended yet
         require(presaleStarted && block.timestamp < presaleEnded, "Presale has ended!");
@@ -65,7 +73,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     }
 
-    function mint() public payable {
+    function mint() public payable onlyWhenNotPaused {
         // check if presale ended
         require(presaleStarted && block.timestamp >= presaleEnded, "Presale has not ended yet");
         // Check How many tokens have been minted, cant exceed max supply
@@ -83,6 +91,11 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
     // We want it to return the base URI 
     function _baseURI() internal view override returns (string memory) {
         return _baseTokenURI;
+    }
+
+    // to pause the contract
+    function setPaused(bool val) public onlyOwner {
+        _paused = val;
     }
 
     // withdraw eth from contract
