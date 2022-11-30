@@ -105,9 +105,12 @@ export default function Home() {
         // call the variable from contract, returns a bool
         const isPresaleStarted = await nftContract.presaleStarted();
         setPresaleStarted(isPresaleStarted);
+
+        return isPresaleStarted;
       
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      return false;
     }
   };
 
@@ -147,22 +150,59 @@ export default function Home() {
     return web3Provider;
 
   };
- 
-    useEffect(() => {
-      if(!walletConnected) {
-        web3ModalRef.current = new Web3Modal({
-          network: "goerli",
-          providerOptions: {},
-          disableInjectedProvider: false,
-        });
 
-        connectWallet();
+  const onPageLoad = async() => {
+    await connectWallet();
+    await getOwner();
+    const presaleStarted = await checkIfPresaleStarted();
 
-        checkIfPresaleStarted();
-        
-      }
-    }, [])
+    if (presaleStarted) {
+      await checkIfPresaleEnded();
+    }
+   
+  };
 
+  useEffect(() => {
+    if(!walletConnected) {
+      web3ModalRef.current = new Web3Modal({
+        network: "goerli",
+        providerOptions: {},
+        disableInjectedProvider: false,
+      });
+
+   
+    onPageLoad();
+      
+    }
+  }, [])
+
+  function renderBody() {
+    if(!walletConnected) {
+      return (
+        <button onClick={connectWallet} className={styles.button}> 
+        Connect Wallet
+      </button>
+      );
+    }
+
+    if (isOwner && !presaleStarted) {
+      //render button to start the presale
+    }
+
+    if (!presaleStarted) {
+      // pre sale hasnt started yet
+    }
+
+    if (presaleStarted && !presaleEnded) {
+      // allow users to mint in presale
+
+    }
+
+    if (presaleEnded) {
+      // allow public sale mint
+    }
+
+  }
 
   return (
     <div>
@@ -173,17 +213,10 @@ export default function Home() {
       </Head>
 
 
-    <div className={styles.main}>
-
-    {walletConnected ? null :
-      (
-      <button onClick={connectWallet} className={styles.button}> 
-      Connect Wallet
-    </button>
-    )}
+      <div className={styles.main}>
 
 
-    </div>1
+      </div>
     </div>
   )
 }
