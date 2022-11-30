@@ -34,6 +34,7 @@ contract CryptoDevs is ERC721Enumerable, Ownable {
 
     modifier onlyWhenNotPaused {
         require(!_paused, "Contract is currently paused!");
+        // must add to execute everything after the require in the contract
         _;
     }
 
