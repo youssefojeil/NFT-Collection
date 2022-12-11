@@ -72,7 +72,7 @@ export default function Home() {
         signer
       );
         
-      const txn = await nftContract.publicMint({
+      const txn = await nftContract.mint({
         value: utils.parseEther("0.01"),
       });
       await txn.wait();
@@ -301,7 +301,7 @@ export default function Home() {
           <span className={styles.description}>
             Presale has started! If your address is whitelisted, you can mint a CryptoDev
           </span>
-          <button className={styles.button} onClick={presaleMint()}>
+          <button className={styles.button} onClick={presaleMint}>
             Presale Mint
           </button>
         </div>
@@ -316,7 +316,7 @@ export default function Home() {
           <span className={styles.description}>
             Presale has ended! You can mint a CryptoDev in public sale, if any remain.
           </span>
-          <button className={styles.button} onClick={publicMint()}>
+          <button className={styles.button} onClick={publicMint}>
             Public Mint
           </button>
         </div>
@@ -339,7 +339,7 @@ export default function Home() {
 
         <h1 className={styles.title}>Welcome to CryptoDevs NFT</h1>
         <div className={styles.description}> 
-          CryptoDevs NFT is a collection for develipers in web3
+          CryptoDevs NFT is a collection for developers in web3
         </div>
         <div className={styles.description}>
           {numTokensMinted}/20 have been minted already 
