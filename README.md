@@ -22,6 +22,8 @@ First ERC-721 NFT Collection and Minting website on the Goerli Testnet. The mint
 
 ## Website
 [Demo Website](https://nft-collection-aeacfdbke-youssefojeil.vercel.app/)
+
+
 [Opensea Collection](https://testnets.opensea.io/collection/crypto-devs-agm6gwevg4)
 
 ## Future Plans
