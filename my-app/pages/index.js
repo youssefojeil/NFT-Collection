@@ -58,7 +58,7 @@ export default function Home() {
     } catch (error) {
       console.error(error)
     }
-    setLoading(false);
+    setLoading(false); 
   };
 
   const publicMint = async() => {
@@ -272,7 +272,7 @@ export default function Home() {
 
     if (loading) {
       return (
-        <span className={style.description}>Loading...</span>
+        <span className={styles.description}>Loading...</span>
       )
     }
 
